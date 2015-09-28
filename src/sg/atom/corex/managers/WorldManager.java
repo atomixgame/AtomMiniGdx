@@ -39,10 +39,10 @@ import sg.atom.corex.entity.SpatialEntity;
 public class WorldManager extends AbstractManager {
 
     public static final Logger logger = LoggerFactory.getLogger(WorldManager.class.getName());
-    Node worldNode;
-    Node levelNode;
+    protected Node worldNode;
+    protected Node levelNode;
     //Models and nodes
-    protected HashMap<String, Node> nodes = new HashMap<String, Node>();
+    protected HashMap<String, Node> nodes;
     //    HashMap<Geometry, Spatial> collisionMap;
     private Geometry boxGeom;
     public Node gizmo = new Node("gizmo");
@@ -51,6 +51,8 @@ public class WorldManager extends AbstractManager {
 
     public WorldManager(AtomMain app) {
         super(app);
+        this.nodes = new HashMap<String, Node>();
+        this.worldNode = new Node("WorldNode");
     }
 
     public void loadLevels() {
@@ -58,7 +60,6 @@ public class WorldManager extends AbstractManager {
 
     @Override
     public void load() {
-        this.worldNode = new Node("WorldNode");
         //Load
         createGrid(20, 20);
         createGizmo();
@@ -85,10 +86,6 @@ public class WorldManager extends AbstractManager {
     }
 
     public void createEntities() {
-        createGroupNode("CollisionBoxes");
-        createGroupNode("Tower");
-        createGroupNode("Soldier");
-        createGroupNode("Dragon");
     }
 
     public void createGroupNode(String name) {

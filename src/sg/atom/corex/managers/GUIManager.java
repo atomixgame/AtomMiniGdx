@@ -21,16 +21,13 @@ public class GUIManager extends AbstractManager {
     protected static GUIManager instance;
     protected BiMap<String, Object> commonScreens;
     Node screenNode;
-    
+
     public GUIManager(AtomMain app) {
         super(app);
     }
 
     public void init() {
-//        guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
-//        guiFont = assetManager.loadFont("Interface/Fonts/SciFied.fnt");
     }
-
 
     public void update(float tpf) {
         if (currentScreen != null) {
@@ -45,12 +42,10 @@ public class GUIManager extends AbstractManager {
 
     public void createScreens() {
         commonScreens = HashBiMap.create();
-//        commonScreens.put("OptionsScreen", new LUIOptionsScreen(this));
-//        commonScreens.put("InGameScreen", new LUIInGameScreen(this));
-        
+
     }
 
-public void registerScreen(String screenName, Object screen) {
+    public void registerScreen(String screenName, Object screen) {
         commonScreens.put(screenName, (TUIBaseScreen) screen);
     }
 
@@ -63,9 +58,9 @@ public void registerScreen(String screenName, Object screen) {
                 screenNode.addControl(nextScreen);
                 this.currentScreen = nextScreen;
 //                this.currentScreen.onStartScreen();
-                System.out.println("GUIManager Goto :" + screenName);
+//                System.out.println("GUIManager Goto :" + screenName);
             } else {
-                System.out.println("GUIManager Try to goto current screen! Do nothing!");
+//                System.out.println("GUIManager Try to goto current screen! Do nothing!");
             }
         } else {
             throw new IllegalArgumentException("No screen existed :" + screenName);
@@ -87,13 +82,12 @@ public void registerScreen(String screenName, Object screen) {
             screenNode.removeFromParent();
 //            app.getInputManager().removeRawInputListener(currentScreen);
 //            this.currentScreen.onEndScreen();
-            System.out.println("Remove screen!");
+//            System.out.println("Remove screen!");
         }
     }
 
     public BitmapFont getGuiFont() {
         return guiFont;
     }
-    
-    
+
 }
