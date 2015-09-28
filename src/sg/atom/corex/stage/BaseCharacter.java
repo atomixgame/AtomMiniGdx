@@ -33,6 +33,11 @@ public class BaseCharacter extends SpatialEntity implements GameActor {
     @Override
     public void init(Application app) {
         super.init(app);
+
+        initAgent();
+    }
+
+    protected void initAgent() {
         this.agent = new Agent(type + getIid(), spatial);
         this.agent.init(this.app);
         this.agent.setModel(this);
