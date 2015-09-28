@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE SAX-bindings PUBLIC "-//XML Module//DTD SAX Bindings 1.0//EN" "">
+<SAX-bindings version='1'>
+	<bind element='terrain' method='terrain' type='EMPTY' ></bind>
+	<bind element='tileset' method='tileset' type='CONTAINER' ></bind>
+	<bind element='ellipse' method='ellipse' type='EMPTY' ></bind>
+	<bind element='terraintypes' method='terraintypes' type='CONTAINER' ></bind>
+	<bind element='layer' method='layer' type='CONTAINER' ></bind>
+	<bind element='data' method='data' type='DATA' ></bind>
+	<bind element='image' method='image' type='EMPTY' ></bind>
+	<bind element='property' method='property' type='EMPTY' ></bind>
+	<bind element='properties' method='properties' type='CONTAINER' ></bind>
+	<bind element='object' method='object' type='CONTAINER' ></bind>
+	<bind element='polygon' method='polygon' type='EMPTY' ></bind>
+	<bind element='polyline' method='polyline' type='EMPTY' ></bind>
+	<bind element='tile' method='tile' type='CONTAINER' ></bind>
+	<bind element='objectgroup' method='objectgroup' type='CONTAINER' ></bind>
+	<bind element='map' method='map' type='CONTAINER' ></bind>
+</SAX-bindings>

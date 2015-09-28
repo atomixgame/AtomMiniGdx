@@ -1,0 +1,7 @@
+build/
+dist/
+*.dylib
+*.dll
+**/private/
+mobile/bin
+mobile/gen
