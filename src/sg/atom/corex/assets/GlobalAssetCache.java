@@ -32,7 +32,7 @@ import sg.atom.corex.managers.WorldManager;
  */
 public class GlobalAssetCache extends BaseGameState implements IGameCycle {
 
-    HashMap<String, String> modelMap = new HashMap<String, String>();
+    public HashMap<String, String> modelMap;
     LoadingCache<String, Spatial> modelCache = CacheBuilder.newBuilder()
             .maximumSize(20)
             .expireAfterWrite(4, TimeUnit.MINUTES)
@@ -45,14 +45,17 @@ public class GlobalAssetCache extends BaseGameState implements IGameCycle {
     public HashMap<String, BitmapFont> fonts;
     public HashMap<String, AudioNode> sounds;
 
+    public GlobalAssetCache() {
+        modelMap = new HashMap<String, String>();
+        spriteSheets = new HashMap<String, SpriteSheet>();
+    }
+
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
     }
 
     public void load() {
-        createSpriteSheetMap();
-        createModelMap();
     }
 
     public void init() {
@@ -94,26 +97,5 @@ public class GlobalAssetCache extends BaseGameState implements IGameCycle {
 
     protected Spatial loadModel(String modelName) {
         return app.getAssetManager().loadModel(modelMap.get(modelName));
-    }
-
-    protected void createModelMap() {
-        modelMap.put("Warrior1", "Models/Troop/Warrior/Warrior1/Warrior1.j3o");
-        modelMap.put("Warrior2", "Models/Troop/Warrior/Warrior2/Warrior2.j3o");
-        modelMap.put("Warrior3", "Models/Troop/Warrior/Warrior3/Warrior3.j3o");
-        modelMap.put("Tower", "Models/Architecture/Tower1.j3o");
-        modelMap.put("Dragon", "Models/Dragon/dragon_fix.j3o");
-        modelMap.put("Ogre", "Models/Troop/Warrior/Warrior1.j3o");
-        modelMap.put("Castle1", "Models/Architecture/Castle2.j3o");
-        modelMap.put("Flag", "Models/Architecture/Flag.j3o");
-    }
-
-    protected void createSpriteSheetMap() {
-        spriteSheets = new HashMap<String, SpriteSheet>();
-        spriteSheets.put("CommonIcons", assetManager.loadAsset(new AssetKey<SpriteSheet>("Interface/Images/CommonIcons.sprites")));
-        spriteSheets.put("CommonElements", assetManager.loadAsset(new AssetKey<SpriteSheet>("Interface/Images/CommonElements.sprites")));
-        spriteSheets.put("CharacterThumbnails", assetManager.loadAsset(new AssetKey<SpriteSheet>("Interface/Images/Characters/Thumbnails/Characters.sprites")));
-        spriteSheets.put("ItemThumbnails", assetManager.loadAsset(new AssetKey<SpriteSheet>("Interface/Images/Items/Items.sprites")));
-        spriteSheets.put("UiSkin1", assetManager.loadAsset(new AssetKey<SpriteSheet>("Interface/Skin/ui.sprites")));
-        spriteSheets.put("UiSkin2", assetManager.loadAsset(new AssetKey<SpriteSheet>("Interface/Skin/ui2.sprites")));
     }
 }

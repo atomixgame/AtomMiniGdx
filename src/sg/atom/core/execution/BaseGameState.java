@@ -38,6 +38,8 @@ public class BaseGameState extends AbstractAppState {
         this.guiManager = this.app.getGUIManager();
         this.stageManager = this.app.getStageManager();
         this.inputManager = this.app.getInputManager();
+
+        this.initialized = true;
     }
 
     public void goToState(Class<? extends AbstractAppState> newState) {

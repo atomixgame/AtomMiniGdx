@@ -57,17 +57,21 @@ public class AtomMain extends SimpleApplication implements IGameCycle {
     public void init() {
         initConfigurations();
         initServices();
+        initAssets();
         initManagers();
         activeManagers();
         initStates();
     }
 
-    protected void initManagers() {
+    protected void initAssets() {
         this.assetManager.registerLoader(SpriteSheetLoader.class, "sprites");
         this.assetManager.registerLoader(TextLoader.class, "json");
         this.globalAssetCache = new GlobalAssetCache();
         this.stateManager.attach(this.globalAssetCache);
         this.globalAssetCache.initialize(stateManager, this);
+    }
+
+    protected void initManagers() {
 
         this.entityManager = new EntityManager(this);
         this.materialManager = new MaterialManager(this);
@@ -191,6 +195,10 @@ public class AtomMain extends SimpleApplication implements IGameCycle {
 
     public AbstractManager getGamePlayManager() {
         return gamePlayManager;
+    }
+
+    private void loadAssets() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
