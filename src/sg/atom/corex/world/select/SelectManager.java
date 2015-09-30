@@ -25,6 +25,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import java.util.ArrayList;
 import java.util.List;
+import sg.atom.core.AtomMain;
 import sg.atom.core.lifecycle.AbstractManager;
 import sg.atom.corex.entity.SpatialEntity;
 import sg.atom.corex.entity.SpatialEntityControl;
@@ -43,6 +44,10 @@ public class SelectManager extends AbstractManager implements RawInputListener {
     boolean hasSelectedItem;
     boolean isMultiselect;
     Camera cam;
+
+    public SelectManager(AtomMain app) {
+        super(app);
+    }
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {

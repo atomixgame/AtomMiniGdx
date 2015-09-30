@@ -26,6 +26,7 @@ public class BaseGameState extends AbstractAppState {
     protected InputManager inputManager;
     protected GUIManager guiManager;
     protected StageManager stageManager;
+    protected boolean actived = false;
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
@@ -50,5 +51,9 @@ public class BaseGameState extends AbstractAppState {
 
     public AtomMain getApp() {
         return app;
+    }
+
+    public boolean isActived() {
+        return actived;
     }
 }

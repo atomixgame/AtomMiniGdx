@@ -61,10 +61,12 @@ public class WorldManager extends AbstractManager {
     @Override
     public void load() {
         //Load
-        createGrid(20, 20);
-        createGizmo();
-//        createSkyBox();
+        if (getApp().isDebugMode()) {
+            createGrid(20, 20);
+            createGizmo();
+        }
         createEntities();
+
         //Config
         setupInput();
         setupLights();
@@ -72,8 +74,11 @@ public class WorldManager extends AbstractManager {
 
     }
 
-    public void createSkyBox() {
-        Spatial sky = SkyFactory.createSky(assetManager, "Textures/Beach/FullskiesSunset0068.dds", false);
+    public void createSkyBox(String path) {
+        if (path == null) {
+            path = "Textures/Beach/FullskiesSunset0068.dds";
+        }
+        Spatial sky = SkyFactory.createSky(assetManager, path, false);
         sky.setLocalScale(350);
 
         worldNode.attachChild(sky);

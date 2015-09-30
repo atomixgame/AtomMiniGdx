@@ -26,7 +26,7 @@ public class AbstractManager implements IGameCycle, AppState {
     protected AppStateManager stateManager;
     protected InputManager inputManager;
     protected boolean actived;
-    private boolean initialized;
+    protected boolean initialized;
     protected boolean customCycle = false;
 
     protected AbstractManager() {
@@ -64,7 +64,10 @@ public class AbstractManager implements IGameCycle, AppState {
 
     public void initialize(AppStateManager stateManager, Application app) {
         this.app = (AtomMain) app;
-        init();
+
+        if (!isInitialized()) {
+            init();
+        }
     }
 
     public boolean isInitialized() {

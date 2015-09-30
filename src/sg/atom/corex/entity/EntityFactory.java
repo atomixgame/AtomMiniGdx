@@ -28,7 +28,7 @@ import sg.atom.core.AtomMain;
 public class EntityFactory {
 
     protected EntityManager entityManager;
-    public static final String entityPackageName = "sg.games.dragon.entities";
+    public static String entityPackageName = "";
     protected AtomMain app;
 
     public EntityFactory(AtomMain app) {
@@ -143,5 +143,9 @@ public class EntityFactory {
 
     public Object cloneComponent(Object component) {
         return null;
+    }
+
+    public static void setEntityPackageName(String entityPackageName) {
+        EntityFactory.entityPackageName = entityPackageName;
     }
 }

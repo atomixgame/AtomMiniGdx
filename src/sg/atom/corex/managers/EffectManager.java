@@ -10,6 +10,7 @@ import com.jme3.effect.ParticleMesh;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import sg.atom.core.AtomMain;
 
@@ -27,6 +28,10 @@ public class EffectManager extends AbstractManager {
     }
 
     public void createParticleEffects() {
+    }
+
+    public Spatial getEffect(String name, Object... params) {
+        return new Node("Effect " + name);
     }
 
     public ParticleEmitter createExplosion() {

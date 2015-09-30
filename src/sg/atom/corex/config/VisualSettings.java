@@ -1,10 +1,5 @@
 package sg.atom.corex.config;
 
-import java.io.Reader;
-import java.io.Writer;
-import org.apache.commons.configuration.AbstractConfiguration;
-import org.apache.commons.configuration.AbstractFileConfiguration;
-import org.apache.commons.configuration.ConfigurationException;
 import static sg.atom.corex.config.QualitySetting.*;
 
 /**

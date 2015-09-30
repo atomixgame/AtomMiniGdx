@@ -25,6 +25,7 @@ public class BaseCharacter extends SpatialEntity implements GameActor {
     public static final Logger logger = Logger.getLogger(BaseCharacter.class);
     protected StateMachine<AIState, AIEvent> brain;
     protected Agent<BaseCharacter> agent;
+    protected float moveSpeed = 0;
 
     public BaseCharacter(long iid, String type, Spatial spatial) {
         super(iid, type, spatial);
@@ -102,6 +103,14 @@ public class BaseCharacter extends SpatialEntity implements GameActor {
     }
 
     public void addAction(ActionTrigger actionTrigger, GameAction action) {
+    }
+
+    public float getMoveSpeed() {
+        return moveSpeed;
+    }
+
+    public void setMoveSpeed(float moveSpeed) {
+        this.moveSpeed = moveSpeed;
     }
 
 }

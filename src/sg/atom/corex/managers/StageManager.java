@@ -1,11 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sg.atom.corex.managers;
 
 import sg.atom.core.lifecycle.AbstractManager;
-import com.jme3.audio.AudioNode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.ViewPort;
 import sg.atom.core.AtomMain;
@@ -16,6 +11,8 @@ import sg.atom.core.AtomMain;
  */
 public class StageManager extends AbstractManager {
 
+    float totalTime = 0;
+
     public StageManager(AtomMain app) {
         super(app);
     }
@@ -25,6 +22,13 @@ public class StageManager extends AbstractManager {
         setupBackground();
         setupCamera();
 //        setupSounds();
+    }
+
+    @Override
+    public void update(float tpf) {
+        super.update(tpf);
+
+        totalTime += tpf;
     }
 
     public void setupBackground() {
@@ -39,7 +43,9 @@ public class StageManager extends AbstractManager {
     }
 
     public void onStageReady() {
-        app.getInputManager().setCursorVisible(false);
-        //        flyCam.setEnabled(false);
+    }
+
+    public float getTime() {
+        return totalTime;
     }
 }
