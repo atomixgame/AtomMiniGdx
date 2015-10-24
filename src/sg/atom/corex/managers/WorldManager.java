@@ -1,9 +1,9 @@
 package sg.atom.corex.managers;
 
 import com.google.common.eventbus.Subscribe;
+import com.jme3.audio.AudioNode;
+import com.jme3.audio.LowPassFilter;
 import sg.atom.core.lifecycle.AbstractManager;
-import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.AnalogListener;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.light.PointLight;
@@ -23,7 +23,9 @@ import com.jme3.scene.debug.Grid;
 import com.jme3.scene.shape.Box;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.texture.Texture;
+import com.jme3.texture.Texture2D;
 import com.jme3.util.SkyFactory;
+import com.jme3.water.WaterFilter;
 import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,22 @@ public class WorldManager extends AbstractManager {
     public Node gizmo = new Node("gizmo");
     public Geometry ground;
     public Geometry gridGeo;
+    public Vector3f lightDir = new Vector3f(-4.9236743f, -1.27054665f, 5.896916f);
+    public WaterFilter water;
+    Material matRock;
+    AudioNode waveSounds;
+    LowPassFilter underWaterAudioFilter = new LowPassFilter(0.5f, 0.1f);
+    LowPassFilter underWaterReverbFilter = new LowPassFilter(0.5f, 0.1f);
+    LowPassFilter aboveWaterAudioFilter = new LowPassFilter(1, 1);
+    public float time = 0.0f;
+    public float waterHeight = 0.0f;
+    public float initialWaterHeight = 5f;
+    public boolean isUnderWater = false;
+
+    //Settings?
+    public boolean isUseLight = true;
+    public boolean isUseShadow = true;
+    public boolean isUseWater = false;
 
     public WorldManager(AtomMain app) {
         super(app);
@@ -65,13 +83,14 @@ public class WorldManager extends AbstractManager {
             createGrid(20, 20);
             createGizmo();
         }
+        if (isUseLight) {
+            setupLights();
+        }
+        if (isUnderWater) {
+            createOcean();
+        }
         createEntities();
-
-        //Config
-        setupInput();
-        setupLights();
         attachNodes();
-
     }
 
     public void createSkyBox(String path) {
@@ -216,6 +235,33 @@ public class WorldManager extends AbstractManager {
     public void createForest() {
     }
 
+    protected void createOcean() {
+        //Water Filter
+        water = new WaterFilter(rootNode, lightDir);
+        water.setWaterColor(new ColorRGBA().setAsSrgb(0.0078f, 0.3176f, 0.9f, 1.0f));
+        water.setDeepWaterColor(new ColorRGBA().setAsSrgb(0.0039f, 0.00196f, 0.145f, 1.0f));
+        water.setUnderWaterFogDistance(80);
+        water.setWaterTransparency(0.62f);
+        water.setFoamIntensity(0.4f);
+        water.setFoamHardness(0.3f);
+        water.setFoamExistence(new Vector3f(0.8f, 8f, 1f));
+        water.setReflectionDisplace(50);
+        water.setRefractionConstant(0.25f);
+        water.setColorExtinction(new Vector3f(30, 50, 70));
+        water.setCausticsIntensity(0.4f);
+        water.setWaveScale(0.003f);
+        water.setMaxAmplitude(2f);
+        water.setFoamTexture((Texture2D) assetManager.loadTexture("Common/MatDefs/Water/Textures/foam2.jpg"));
+        water.setRefractionStrength(0.1f);
+        water.setWaterHeight(initialWaterHeight);
+
+        FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
+        fpp.addFilter(water);
+        getApp().getViewPort().addProcessor(fpp);
+
+        isUnderWater = getApp().getCamera().getLocation().y < waterHeight;
+    }
+
     public void setupLights() {
         DirectionalLight sun = new DirectionalLight();
         sun.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
@@ -225,38 +271,20 @@ public class WorldManager extends AbstractManager {
         AmbientLight ambient = new AmbientLight();
         ambient.setColor(ColorRGBA.White);
         getWorldNode().addLight(ambient);
-        PointLight lamp = new PointLight();
-        lamp.setPosition(new Vector3f(0, 40, 0));
-        lamp.setColor(ColorRGBA.White);
-        getWorldNode().addLight(lamp);
+        
+//        PointLight lamp = new PointLight();
+//        lamp.setPosition(new Vector3f(0, 40, 0));
+//        lamp.setColor(ColorRGBA.White);
+//        getWorldNode().addLight(lamp);
 
-        /* this shadow needs a directional light */
-        FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
-        DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(assetManager, 1024, 2);
-        dlsf.setLight(sun);
-        fpp.addFilter(dlsf);
-        app.getViewPort().addProcessor(fpp);
-
-    }
-
-    public void setupInput() {
-        //Mouse
-        //Key
-//        inputManager.addMapping("Shoot",
-//                new KeyTrigger(KeyInput.KEY_SPACE));
-//        inputManager.addMapping("Reload",
-//                new KeyTrigger(KeyInput.KEY_SPACE));
-//        inputManager.addListener(actionListener, "Shoot", "Reload");
-//        inputManager.addListener(analogListener, "Shoot");
-    }
-    private ActionListener actionListener = new ActionListener() {
-        public void onAction(String name, boolean pressed, float tpf) {
+        if (isUseShadow) {
+            FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
+            DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(assetManager, 1024, 2);
+            dlsf.setLight(sun);
+            fpp.addFilter(dlsf);
+            app.getViewPort().addProcessor(fpp);
         }
-    };
-    private AnalogListener analogListener = new AnalogListener() {
-        public void onAnalog(String name, float intensity, float tpf) {
-        }
-    };
+    }
 
     public Spatial createPlaceHolder(String type) {
         return boxGeom.clone();

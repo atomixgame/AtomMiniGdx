@@ -25,7 +25,9 @@ public class BaseCharacter extends SpatialEntity implements GameActor {
     public static final Logger logger = Logger.getLogger(BaseCharacter.class);
     protected StateMachine<AIState, AIEvent> brain;
     protected Agent<BaseCharacter> agent;
-    protected float moveSpeed = 0;
+    protected float moveSpeed;
+    protected Vector3f moveVec;
+    protected Vector3f viewDir;
 
     public BaseCharacter(long iid, String type, Spatial spatial) {
         super(iid, type, spatial);
@@ -39,6 +41,8 @@ public class BaseCharacter extends SpatialEntity implements GameActor {
     }
 
     protected void initAgent() {
+        moveSpeed = 0;
+        moveVec = new Vector3f(0, 0, 1);
         this.agent = new Agent(type + getIid(), spatial);
         this.agent.init(this.app);
         this.agent.setModel(this);
@@ -87,12 +91,12 @@ public class BaseCharacter extends SpatialEntity implements GameActor {
         this.spatial.setLocalTranslation(agent.getLocalTranslation().clone());
     }
 
-    public void setWalkDirection(Vector3f vel) {
-        //        Vector3f newPos = getSpatial().getLocalTranslation().add(vel);
-        //        getSpatial().setLocalTranslation(newPos);
+    public void setWalkDirection(Vector3f moveVec) {
+        this.moveVec = moveVec;
     }
 
-    public void setViewDirection(Vector3f normalize) {
+    public void setViewDirection(Vector3f viewDir) {
+        this.viewDir = viewDir;
     }
 
     public boolean isStaged() {
@@ -111,6 +115,22 @@ public class BaseCharacter extends SpatialEntity implements GameActor {
 
     public void setMoveSpeed(float moveSpeed) {
         this.moveSpeed = moveSpeed;
+    }
+
+    public Vector3f getMoveVec() {
+        return moveVec;
+    }
+
+    public void setMoveVec(Vector3f moveVec) {
+        this.moveVec = moveVec;
+    }
+
+    public Vector3f getViewDir() {
+        return viewDir;
+    }
+
+    public void setViewDir(Vector3f viewDir) {
+        this.viewDir = viewDir;
     }
 
 }

@@ -44,6 +44,8 @@ public abstract class PhysicalSpatialControl extends AbstractControl {
     protected float rotationSpeed;
     protected float activeTime = 0;
 
+    protected Vector3f moveVec;
+
     public void init(AtomMain app) {
         this.app = app;
     }
@@ -149,6 +151,14 @@ public abstract class PhysicalSpatialControl extends AbstractControl {
 
     public float getActiveTime() {
         return activeTime;
+    }
+
+    public void setMoveVec(Vector3f moveVec) {
+        this.moveVec = moveVec;
+    }
+
+    public Vector3f getMoveVec() {
+        return moveVec;
     }
 
 }

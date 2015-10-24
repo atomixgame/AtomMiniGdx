@@ -197,10 +197,6 @@ public class AtomMain extends SimpleApplication implements IGameCycle {
         return gamePlayManager;
     }
 
-    private void loadAssets() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public boolean isDebugMode() {
         return false;
     }
