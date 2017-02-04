@@ -18,16 +18,10 @@ public class VisualSettings {
     // Shader
     public String shaderVersion = "GL1.5";
     public QualitySetting shaderQuality = NORMAL;
-    // Sound
-    public float soundVolume = 1;
-    public float musicVolume = 1;
-    public boolean muted = false;
-    public QualitySetting soundQuality = NORMAL;
+
 
     public VisualSettings() {
-        this.soundVolume = 1;
-        this.musicVolume = 1;
-        this.muted = false;
+
 
     }
 

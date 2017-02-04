@@ -8,7 +8,7 @@ import com.jme3.input.InputManager;
 import com.jme3.scene.Node;
 import java.util.logging.Logger;
 import sg.atom.core.AtomMain;
-import sg.atom.corex.managers.GUIManager;
+import sg.atom.corex.ui.tonegod.GUIManager;
 import sg.atom.corex.managers.StageManager;
 
 /**

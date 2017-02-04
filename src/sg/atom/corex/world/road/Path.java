@@ -2,7 +2,6 @@ package sg.atom.corex.world.road;
 
 import com.jme3.material.Material;
 import com.jme3.math.Spline;
-import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -10,8 +9,8 @@ import com.jme3.scene.shape.Line;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sg.atom.corex.geo.Line3f;
 import sg.atom.corex.world.curve.CurveHelper;
-import sg.atom.corex.world.map.shape.PolylineMapObject;
 
 /**
  * A Path consist of N control points. Also can be decomposed to N-1 Segment.
@@ -19,19 +18,19 @@ import sg.atom.corex.world.map.shape.PolylineMapObject;
  *
  * @author CuongNguyen
  */
-public class Path {
+public class Path implements Line3f{
 
     public static final Logger logger = LoggerFactory.getLogger(Path.class);
     ArrayList<Vector3f> points;
     Spline spline;
-    private PolylineMapObject polylineMapObject;
+    private Line3f polylineMapObject;
 
-    public Path(PolylineMapObject polylineMapObject, float ratio, float groundHeight) {
+    public Path(Line3f polylineMapObject, float ratio, float groundHeight) {
         this.points = new ArrayList<Vector3f>();
         this.polylineMapObject = polylineMapObject;
         logger.info("" + polylineMapObject.toString());
-        Vector2f start = polylineMapObject.getPosition();
-        for (Vector2f mapPoint : polylineMapObject.getPoints()) {
+        Vector3f start = polylineMapObject.getStartPoint();
+        for (Vector3f mapPoint : polylineMapObject.getPoints()) {
             this.points.add(new Vector3f((start.x + mapPoint.x) * ratio, groundHeight, (start.y + mapPoint.y) * ratio));
         }
     }
@@ -50,7 +49,7 @@ public class Path {
         return interPoints;
     }
 
-    public PolylineMapObject getPolylineMapObject() {
+    public Line3f getPolylineMapObject() {
         return polylineMapObject;
     }
 
@@ -89,5 +88,20 @@ public class Path {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Vector3f getStartPoint() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Vector3f getEndPoint() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isLoop() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

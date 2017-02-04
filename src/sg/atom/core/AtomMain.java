@@ -20,7 +20,7 @@ import sg.atom.corex.entity.EntityManager;
 import sg.atom.core.lifecycle.IGameCycle;
 import sg.atom.corex.assets.GlobalAssetCache;
 import sg.atom.corex.managers.EffectManager;
-import sg.atom.corex.managers.GUIManager;
+import sg.atom.corex.ui.tonegod.GUIManager;
 import sg.atom.corex.managers.MaterialManager;
 import sg.atom.corex.managers.SoundManager;
 import sg.atom.corex.managers.StageManager;
